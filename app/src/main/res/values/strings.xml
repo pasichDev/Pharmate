@@ -1,3 +1,77 @@
 <resources>
     <string name="app_name">Pharmate</string>
+    <string name="app_descr">Сучасний трекер здоров’я та прийому ліків, що допомагає вам дбати про себе легко й зручно.</string>
+
+    <!-- DEF -->
+    <string name="cancel">Скасувати</string>
+    <string name="create_item">Створити запис</string>
+    <string name="next_step">Наступний крок</string>
+    <string name="units">Одиниця виміру</string>
+    <string name="previous">Попередній</string>
+    <string name="add_entry">Додати запис</string>
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+    <string name="save">Зберегти</string>
+    <string name="error">Помилка</string>
+    <string name="dosage">Дозування</string>
+    <string name="add">Додати</string>
+    <string name="noSett">Не налаштовано</string>
+    <string name="daily">Щодня</string>
+
+
+    <!-- BottomBar -->
+    <string name="monday">Сьогодні</string>
+    <string name="planning">Планування</string>
+    <string name="tracking">Трекінг</string>
+    <string name="menu">Меню</string>
+
+    <!-- Planing -->
+    <string name="emptyTitle">Готові почати?</string>
+    <string name="emptyDescr">Додайте перше нагадування про ліки</string>
+    <string name="fab_add">Додати запис</string>
+    <string name="name_medicine">Назва препарату</string>
+    <string name="add_medicine">Додати препарат</string>
+    <string name="medicine_take_as_needed_question"> "Чи потрібно приймати ці ліки лише за потреби? (Якщо так, нагадування не потрібне.)"</string>
+    <string name="planing_subtitle_first">Основна інформація: назва, одиниця виміру, запас</string>
+    <string name="planing_subtitle_second">Частота та період прийому</string>
+    <string name="reminder_restock_question">Отримувати нагадування про необхідність поповнення запасів?</string>
+    <string name="current_stocks">Поточні запаси</string>
+    <string name="remind_me_of_stock">Нагадати при залишку</string>
+    <string name="reminderRestockMedicineOff">Нагадування поповнити запаси вимкнено</string>
+    <string name="daily_dosage_frequency">Як часто ви будете приймати цей препарат на протязі дня?</string>
+    <string name="setupCount">Налаштовано %1$d прийомів</string>
+    <string name="setupCountDaysOfWeek">Вибрано %1$d днів тижня</string>
+    <string name="weeklyIntakeSelectorTitle">Як часто ви будете приймати цей препарат на протязі тижня?</string>
+    <string name="periodUsePill">Період прийому препарату</string>
+    <string name="startUse">Початок:</string>
+    <string name="endUse">Кінець:</string>
+
+    <!-- Menu -->
+    <string name="donate_desc">Проявіть свою любов — підтримайте нас донатом!</string>
+    <string name="donate">Проявіть свою любов</string>
+    <string name="about">Про додаток</string>
+    <string name="about_desc">Версія, Розробники, Ліцензія</string>
+    <string name="theme">Тема</string>
+    <string name="dynamic_color">Динамічний колір</string>
+    <string name="dynamic_color_subtitle">Автоматично адаптувати кольори теми відповідно до вашого пристрою</string>
+
+
+    <!-- ThemeType -->
+    <string name="theme_dialog_title">Вибрати тему</string>
+    <string name="theme_type_system">За умовчанням у системі</string>
+    <string name="theme_type_dark">Темна</string>
+    <string name="theme_type_light">Світла</string>
+
+    <!-- Tips -->
+    <string name="enter_name_unit">Введіть назву препарату та його одиницю виміру, щоб продовжити планування прийому</string>
+
+    <!-- ERROR -->
+    <string name="error_name_length">Назва повинна містити від 3 до 25 символів</string>
+
+
+    <!-- Dialog Title -->
+    <string name="current_stock_title">Вкажіть ваші поточні запаси</string>
+    <string name="low_stock_threshold_title">Вкажіть при якому залишку вас сповістити</string>
+    <string name="enterTimeAndDosageDialog">Введіть час та дозування</string>
+
 </resources>
