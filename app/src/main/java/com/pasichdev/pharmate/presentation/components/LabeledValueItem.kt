@@ -1,4 +1,4 @@
-package com.pasichdev.pharmate.presentation.components.planing
+package com.pasichdev.pharmate.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -14,11 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.unit.dp
-import com.pasichdev.pharmate.ui.theme.titlePlaningCard
+import com.pasichdev.pharmate.ui.theme.titlePlanningCard
 
 
 @Composable
-fun PlaningSettingsItem(
+fun LabeledValueItem(
     itemTitle: String, value: String, enabled: Boolean = true, action: () -> Unit
 ) {
     Row(
@@ -33,7 +33,7 @@ fun PlaningSettingsItem(
             modifier = Modifier
                 .weight(1f)
                 .padding(vertical = 8.dp),
-            style = titlePlaningCard
+            style = titlePlanningCard
         )
 
         Box(

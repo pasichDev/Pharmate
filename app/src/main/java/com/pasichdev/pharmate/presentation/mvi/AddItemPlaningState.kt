@@ -7,13 +7,13 @@ import com.pasichdev.pharmate.domain.defaultMeasurementUnit
 import com.pasichdev.pharmate.domain.model.MedicationDoseInfo
 
 
-data class AddItemPlaningState(
-    val nameMedicine: TextFieldValue = TextFieldValue("Ібупрофен"), // TODO CLEAN
+data class AddItemPlanningState(
+    val nameMedicine: TextFieldValue = TextFieldValue("Ibuprofen"), // TODO CLEAN
     val measurementUnit: MeasurementUnit = defaultMeasurementUnit,
     val reminderRestockMedicine: Boolean = false,
-    val selectedIfMedicationIsAsNeeded: Boolean = false,
     val currentStocks: Int = 30,
     val remindMeOfStock: Int = 10,
+    val selectedIfMedicationIsAsNeeded: Boolean = false,
     val listTimesForDay: MutableList<MedicationDoseInfo> = mutableListOf<MedicationDoseInfo>().apply {
         add(MedicationDoseInfo(time = "08:00", dose = 1))
         add(MedicationDoseInfo(time = "12:00", dose = 1))

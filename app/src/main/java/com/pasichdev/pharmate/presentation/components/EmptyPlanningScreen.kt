@@ -19,14 +19,14 @@ import com.pasichdev.pharmate.R
 
 
 @Composable
-fun EmptyPlaningScreen() {
+fun EmptyPlanningScreen() {
     Column(
         verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
 
         Image(modifier = Modifier.size(180.dp),
-            painter = painterResource(R.drawable.ic_planing_empty), contentDescription = null)
+            painter = painterResource(R.drawable.ic_planning_empty), contentDescription = null)
         Spacer(modifier = Modifier.height(30.dp))
         Text(
             text = stringResource(R.string.emptyTitle),

@@ -1,8 +1,7 @@
-package com.pasichdev.pharmate.presentation.screens.addItemPlaning
+package com.pasichdev.pharmate.presentation.components.addItemToPlanning
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -15,8 +14,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,67 +28,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.pasichdev.pharmate.R
 import com.pasichdev.pharmate.domain.model.MedicationDoseInfo
-import com.pasichdev.pharmate.presentation.components.PreviewChip
-import com.pasichdev.pharmate.ui.theme.titlePlaningCard
 import kotlinx.coroutines.delay
 import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 
 
-enum class SetTimeIntervalForDayAction {
-    SHOW_DIALOG, DELETE_ITEM
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun SetTimeIntervalForDayScreen(
-    modifier: Modifier = Modifier,
-    listTimesForDay: List<MedicationDoseInfo>,
-    measurementUnit: String,
-    visibilityFull: Boolean = false,
-    activateCard: (ShowCategorySettingsTime) -> Unit,
-    otherAction: (SetTimeIntervalForDayAction, MedicationDoseInfo?) -> Unit
-) {
-
-
-    Card(modifier = modifier, onClick = { activateCard(ShowCategorySettingsTime.DAYS) }) {
-        Column(modifier = Modifier.padding(20.dp)) {
-            Text(
-                stringResource(R.string.daily_dosage_frequency), style = titlePlaningCard
-            )
-
-            if (!visibilityFull) {
-                PreviewChip(
-                    textTrue = stringResource(R.string.noSett), textFalse = stringResource(
-                        R.string.setupCount, listTimesForDay.count()
-                    ), isPreview = listTimesForDay.isEmpty()
-                ) {
-                    if (listTimesForDay.isEmpty()) {
-                        activateCard(ShowCategorySettingsTime.DAYS)
-                        otherAction(SetTimeIntervalForDayAction.SHOW_DIALOG, null)
-                    } else {
-                        activateCard(ShowCategorySettingsTime.DAYS)
-                    }
-                }
-
-            }
-
-            if (visibilityFull) {
-                IntervalsForDayChipGroup(items = listTimesForDay,
-                    measurementUnit = measurementUnit,
-                    onAddClick = { otherAction(SetTimeIntervalForDayAction.SHOW_DIALOG, null) },
-                    onTrailingClick = { otherAction(SetTimeIntervalForDayAction.DELETE_ITEM, it) })
-            }
-
-        }
-    }
-
-
-}
-
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun IntervalsForDayChipGroup(
+fun DoseIntervalList (
     items: List<MedicationDoseInfo>,
     measurementUnit: String,
     onAddClick: () -> Unit,

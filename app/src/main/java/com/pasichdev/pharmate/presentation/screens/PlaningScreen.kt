@@ -21,16 +21,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.navigation.NavHostController
 import com.pasichdev.pharmate.R
 import com.pasichdev.pharmate.presentation.Routes
-import com.pasichdev.pharmate.presentation.components.EmptyPlaningScreen
+import com.pasichdev.pharmate.presentation.components.EmptyPlanningScreen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PlaningScreen(navHost: NavHostController) {
+fun PlanningScreen(navHost: NavHostController) {
 
     Scaffold(floatingActionButton = {
         ExtendedFloatingActionButton(
-            onClick = { navHost.navigate(Routes.AddItemPlaning.toString()) },
+            onClick = { navHost.navigate(Routes.AddItemPlanning.toString()) },
             contentColor = Color.White,
             containerColor = MaterialTheme.colorScheme.primary,
             icon = {
@@ -59,7 +59,7 @@ fun PlaningScreen(navHost: NavHostController) {
                 .fillMaxSize()
                 .wrapContentSize(Alignment.Center)
         ) {
-            EmptyPlaningScreen()
+            EmptyPlanningScreen()
         }
 
     })

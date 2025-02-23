@@ -21,4 +21,4 @@ val Typography = Typography(
 val baseline = Typography()
 
 
-var titlePlaningCard =  baseline.titleMedium
+var titlePlanningCard =  baseline.titleMedium

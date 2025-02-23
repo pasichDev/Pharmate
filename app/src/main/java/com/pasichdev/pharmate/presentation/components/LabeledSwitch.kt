@@ -1,4 +1,4 @@
-package com.pasichdev.pharmate.presentation.components.planing
+package com.pasichdev.pharmate.presentation.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -15,22 +15,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.pasichdev.pharmate.ui.theme.titlePlaningCard
+import com.pasichdev.pharmate.ui.theme.titlePlanningCard
 
-enum class StylePlaningTitleSwitch { COLUMN, ROW }
+enum class StylePlanningTitleSwitch { COLUMN, ROW }
 
 @Composable
-fun PlaningTitleSwitch(
+fun LabeledSwitch(
     itemTitle: String,
     value: Boolean,
-    style: StylePlaningTitleSwitch = StylePlaningTitleSwitch.ROW,
+    style: StylePlanningTitleSwitch = StylePlanningTitleSwitch.ROW,
     action: (Boolean) -> Unit
 ) {
 
     var weightSwitch = 0.15f
-    var weightTitle = if (style == StylePlaningTitleSwitch.ROW) 0.75f else 1f
+    var weightTitle = if (style == StylePlanningTitleSwitch.ROW) 0.75f else 1f
     var columnPadding =
-        if (style == StylePlaningTitleSwitch.ROW) PaddingValues(horizontal = 20.dp) else PaddingValues(
+        if (style == StylePlanningTitleSwitch.ROW) PaddingValues(horizontal = 20.dp) else PaddingValues(
             20.dp
         )
 
@@ -57,12 +57,12 @@ fun PlaningTitleSwitch(
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text(
-                itemTitle, Modifier.weight(weightTitle), style = titlePlaningCard
+                itemTitle, Modifier.weight(weightTitle), style = titlePlanningCard
             )
-            if (style == StylePlaningTitleSwitch.ROW) switch(Modifier.weight(weightSwitch))
+            if (style == StylePlanningTitleSwitch.ROW) switch(Modifier.weight(weightSwitch))
         }
 
-        if (style == StylePlaningTitleSwitch.COLUMN) {
+        if (style == StylePlanningTitleSwitch.COLUMN) {
             Spacer(Modifier.height(5.dp))
             switch(Modifier)
         }

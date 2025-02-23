@@ -23,10 +23,10 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.pasichdev.pharmate.R
 import com.pasichdev.pharmate.presentation.components.BottomNavigationBar
-import com.pasichdev.pharmate.presentation.screens.AddItemPlaningScreen
+import com.pasichdev.pharmate.presentation.screens.AddItemToPlanningScreen
 import com.pasichdev.pharmate.presentation.screens.MenuScreen
 import com.pasichdev.pharmate.presentation.screens.MondayScreen
-import com.pasichdev.pharmate.presentation.screens.PlaningScreen
+import com.pasichdev.pharmate.presentation.screens.PlanningScreen
 import com.pasichdev.pharmate.presentation.screens.TrackingScreen
 import com.pasichdev.pharmate.ui.theme.PharmateTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -35,7 +35,7 @@ import dagger.hilt.android.AndroidEntryPoint
 sealed class NavigationItem(var route: String, var icon: Int, var title: Int) {
     object Monday : NavigationItem(Routes.Monday.toString(), R.drawable.ic_branch, R.string.monday)
     object Planning :
-        NavigationItem(Routes.Planing.toString(), R.drawable.ic_calendar, R.string.planning)
+        NavigationItem(Routes.Planning.toString(), R.drawable.ic_calendar, R.string.planning)
 
     object Tracking :
         NavigationItem(Routes.Tracking.toString(), R.drawable.ic_heart, R.string.tracking)
@@ -64,7 +64,7 @@ fun MainScreen() {
     val navController = rememberNavController()
     val backStackEntry by navController.currentBackStackEntryAsState()
 
-    val hideBottomBarRoutes = listOf(Routes.AddItemPlaning.toString())
+    val hideBottomBarRoutes = listOf(Routes.AddItemPlanning.toString())
     val shouldShowBottomBar by remember {
         derivedStateOf { backStackEntry?.destination?.route !in hideBottomBarRoutes }
     }
@@ -92,12 +92,12 @@ fun MainScreen() {
 
 @Composable
 fun Navigation(navController: NavHostController) {
-    NavHost(navController, startDestination =Routes.AddItemPlaning.toString()) {
+    NavHost(navController, startDestination =Routes.AddItemPlanning.toString()) {
         animationScreens(NavigationItem.Monday.route) {
             MondayScreen(navController)
         }
         animationScreens(NavigationItem.Planning.route) {
-            PlaningScreen(navController)
+            PlanningScreen(navController)
         }
         animationScreens(NavigationItem.Tracking.route) {
             TrackingScreen()
@@ -106,8 +106,8 @@ fun Navigation(navController: NavHostController) {
             MenuScreen()
         }
 
-        slideInComposable(Routes.AddItemPlaning.toString()) {
-            AddItemPlaningScreen(
+        slideInComposable(Routes.AddItemPlanning.toString()) {
+            AddItemToPlanningScreen(
                 navController = navController
             )
         }

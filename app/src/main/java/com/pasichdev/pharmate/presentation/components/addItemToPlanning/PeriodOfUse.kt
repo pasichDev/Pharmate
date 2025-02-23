@@ -1,4 +1,4 @@
-package com.pasichdev.pharmate.presentation.screens.addItemPlaning
+package com.pasichdev.pharmate.presentation.components.addItemToPlanning
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -24,9 +24,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.pasichdev.pharmate.R
 import com.pasichdev.pharmate.defaultDateFormat
+import com.pasichdev.pharmate.presentation.components.LabeledValueItem
 import com.pasichdev.pharmate.presentation.components.PreviewChip
-import com.pasichdev.pharmate.presentation.components.planing.PlaningSettingsItem
-import com.pasichdev.pharmate.ui.theme.titlePlaningCard
+import com.pasichdev.pharmate.ui.theme.titlePlanningCard
 import java.time.Instant
 import java.time.LocalDate
 import java.time.ZoneId
@@ -41,7 +41,7 @@ enum class PeriodOfUseScreenAction {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun PeriodOfUseScreen(
+fun PeriodOfUse(
     modifier: Modifier = Modifier,
     startDateUse: String,
     endDateUse: String,
@@ -73,7 +73,7 @@ fun PeriodOfUseScreen(
     Card(modifier = modifier.fillMaxWidth(),
         onClick = { activateCard(ShowCategorySettingsTime.PERIOD) }) {
         Column(modifier = Modifier.padding(top = 20.dp, start = 20.dp, end = 20.dp)) {
-            Text(stringResource(R.string.periodUsePill), style = titlePlaningCard)
+            Text(stringResource(R.string.periodUsePill), style = titlePlanningCard)
 
             if (!fullVisible) {
                 PreviewChip(
@@ -90,13 +90,13 @@ fun PeriodOfUseScreen(
         if (fullVisible) {
             Spacer(modifier = Modifier.height(10.dp))
 
-            PlaningSettingsItem(
+            LabeledValueItem (
                 itemTitle = stringResource(R.string.startUse), value = checkValue(startDateUse)
             ) {
                 showDialog = ShowDialogsDatePicker.START_DATE
             }
             Spacer(modifier = Modifier.height(10.dp))
-            PlaningSettingsItem(
+            LabeledValueItem (
                 itemTitle = stringResource(R.string.endUse),
                 value = checkValue(endDateUse),
                 enabled = startDateUse.isNotEmpty()

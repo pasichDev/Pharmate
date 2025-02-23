@@ -1,4 +1,4 @@
-package com.pasichdev.pharmate.presentation.components
+package com.pasichdev.pharmate.presentation.components.addItemToPlanning
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -19,35 +19,26 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.pasichdev.pharmate.R
-import com.pasichdev.pharmate.presentation.screens.addItemPlaning.StageCreation
 
 enum class CustomTopBarAction {
     NEXT, PREV
 }
 
 @Composable
-fun CustomTopBar(stageCreation: StageCreation, action: (CustomTopBarAction) -> Unit) {
+fun CustomTopBar(
+    stageCreation: StageCreation, isActiveNext: Boolean, action: (CustomTopBarAction) -> Unit
+) {
 
-    fun nameActionNext(): Int {
-        return when (stageCreation) {
-            StageCreation.NAME_UNITS -> R.string.next_step
-            StageCreation.PERIOD_DOSAGE -> R.string.add_medicine
-        }
-    }
 
     fun subTitle(): Int {
         return when (stageCreation) {
-            StageCreation.NAME_UNITS -> R.string.planing_subtitle_first
-            StageCreation.PERIOD_DOSAGE -> R.string.planing_subtitle_second
+            StageCreation.BASIC_INFORMATION -> R.string.Planning_subtitle_first
+            StageCreation.PERIOD -> R.string.Planning_subtitle_second
+            StageCreation.FINAL_STEPS -> R.string.finish_Planning
         }
     }
 
-    fun title(): String {
-        return when (stageCreation) {
-            StageCreation.NAME_UNITS -> "1/2"
-            StageCreation.PERIOD_DOSAGE -> "2/2"
-        }
-    }
+
 
     Row(
         verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.Center
@@ -62,7 +53,7 @@ fun CustomTopBar(stageCreation: StageCreation, action: (CustomTopBarAction) -> U
                 Modifier.weight(1f),
             ) {
                 Text(
-                    title(),
+                    "${(stageCreation.ordinal + 1)}/${StageCreation.entries.size}",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
@@ -72,18 +63,14 @@ fun CustomTopBar(stageCreation: StageCreation, action: (CustomTopBarAction) -> U
                 )
             }
 
-            //TODO Якщо поле вводу на перші сторінці не заповнене тоді декативувати кнопку next
-            when (stageCreation) {
-                StageCreation.NAME_UNITS -> IconButton(onClick = { action(CustomTopBarAction.NEXT) }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowForward, contentDescription = "next")
+            if (stageCreation == StageCreation.BASIC_INFORMATION || stageCreation == StageCreation.PERIOD) {
+                IconButton(onClick = { action(CustomTopBarAction.NEXT) }, enabled = isActiveNext) {
+                    Icon(
+                        Icons.AutoMirrored.Filled.ArrowForward,
+                        contentDescription = stringResource(R.string.next_step)
+                    )
 
                 }
-
-                StageCreation.PERIOD_DOSAGE -> SmallNavButton(
-                    onClick = {
-                        action(CustomTopBarAction.NEXT)
-                    }, name = stringResource(nameActionNext())
-                )
             }
 
             Spacer(modifier = Modifier.width(10.dp))

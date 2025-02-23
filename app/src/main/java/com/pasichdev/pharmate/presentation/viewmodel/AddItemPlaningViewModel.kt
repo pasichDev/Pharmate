@@ -5,7 +5,8 @@ import androidx.lifecycle.ViewModel
 import com.pasichdev.pharmate.defaultAllDaysCode
 import com.pasichdev.pharmate.domain.MeasurementUnit
 import com.pasichdev.pharmate.domain.model.MedicationDoseInfo
-import com.pasichdev.pharmate.presentation.mvi.AddItemPlaningState
+import com.pasichdev.pharmate.presentation.components.addItemToPlanning.StageCreation
+import com.pasichdev.pharmate.presentation.mvi.AddItemPlanningState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,38 +16,39 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class AddItemPlaningViewModel @Inject constructor() : ViewModel() {
+class AddItemPlanningViewModel @Inject constructor() : ViewModel() {
 
-    private val _state = MutableStateFlow(AddItemPlaningState())
-    val state: StateFlow<AddItemPlaningState> = _state.asStateFlow()
+    private val _state = MutableStateFlow(AddItemPlanningState())
+    val state: StateFlow<AddItemPlanningState> = _state.asStateFlow()
 
-    fun onEvent(event: ItemPlaningEvent) {
+
+    fun onEvent(event: ItemPlanningEvent) {
         when (event) {
-            is ItemPlaningEvent.UpdateMeasurementUnit -> {
+            is ItemPlanningEvent.UpdateMeasurementUnit -> {
                 _state.update { it.copy(measurementUnit = event.measurementUnit) }
             }
 
-            is ItemPlaningEvent.UpdateNameMedicine -> {
+            is ItemPlanningEvent.UpdateNameMedicine -> {
                 _state.update { it.copy(nameMedicine = event.nameMedicine) }
             }
 
-            is ItemPlaningEvent.UpdateSelectedIfMedicationIsAsNeeded -> {
+            is ItemPlanningEvent.UpdateSelectedIfMedicationIsAsNeeded -> {
                 _state.update { it.copy(selectedIfMedicationIsAsNeeded = event.value) }
             }
 
-            is ItemPlaningEvent.UpdateReminderRestockMedicine -> {
+            is ItemPlanningEvent.UpdateReminderRestockMedicine -> {
                 _state.update { it.copy(reminderRestockMedicine = event.value) }
             }
 
-            is ItemPlaningEvent.UpdateCurrentStocks -> {
+            is ItemPlanningEvent.UpdateCurrentStocks -> {
                 _state.update { it.copy(currentStocks = event.value) }
             }
 
-            is ItemPlaningEvent.UpdateRemindMeOfStock -> {
+            is ItemPlanningEvent.UpdateRemindMeOfStock -> {
                 _state.update { it.copy(remindMeOfStock = event.value) }
             }
 
-            is ItemPlaningEvent.AddToListTimesForDay -> {
+            is ItemPlanningEvent.AddToListTimesForDay -> {
                 _state.update {
 
                     it.copy(listTimesForDay = it.listTimesForDay.toMutableList().apply {
@@ -58,14 +60,14 @@ class AddItemPlaningViewModel @Inject constructor() : ViewModel() {
 
             }
 
-            is ItemPlaningEvent.DeleteToListTimesForDay -> {
+            is ItemPlanningEvent.DeleteToListTimesForDay -> {
                 _state.update {
                     it.copy(listTimesForDay = it.listTimesForDay.toMutableList()
                         .apply { remove(event.value) })
                 }
             }
 
-            is ItemPlaningEvent.AddToListDayOfWeek -> {
+            is ItemPlanningEvent.AddToListDayOfWeek -> {
                 _state.update {
 
                     it.copy(listDayOfWeek = it.listDayOfWeek.toMutableList().apply {
@@ -76,7 +78,7 @@ class AddItemPlaningViewModel @Inject constructor() : ViewModel() {
                 }
             }
 
-            is ItemPlaningEvent.DeleteToListDayOfWeek -> {
+            is ItemPlanningEvent.DeleteToListDayOfWeek -> {
                     _state.update {
                         it.copy(listDayOfWeek = it.listDayOfWeek.toMutableList()
                             .apply { remove(event.value) })
@@ -84,47 +86,47 @@ class AddItemPlaningViewModel @Inject constructor() : ViewModel() {
                 }
             }
 
-            is ItemPlaningEvent.SelectAllToListDayOfWeek -> {
+            is ItemPlanningEvent.SelectAllToListDayOfWeek -> {
                 _state.update {
 
                     it.copy(listDayOfWeek = mutableListOf<Int>().apply { add(defaultAllDaysCode) })
                 }
             }
 
-            is ItemPlaningEvent.UnSelectAllToListDayOfWeek -> {
+            is ItemPlanningEvent.UnSelectAllToListDayOfWeek -> {
                 _state.update {
                     it.copy(listDayOfWeek = it.listDayOfWeek.toMutableList().apply { clear() })
                 }
             }
 
-            is ItemPlaningEvent.UpdateEndDateUse -> {  _state.update { it.copy(endDateMedicineUse = event.value) }}
-            is ItemPlaningEvent.UpdateStartDateUse -> {  _state.update { it.copy(startDateMedicineUse = event.value) }}
+            is ItemPlanningEvent.UpdateEndDateUse -> {  _state.update { it.copy(endDateMedicineUse = event.value) }}
+            is ItemPlanningEvent.UpdateStartDateUse -> {  _state.update { it.copy(startDateMedicineUse = event.value) }}
         }
     }
 
 
 }
 
-sealed class ItemPlaningEvent {
-    data class UpdateMeasurementUnit(val measurementUnit: MeasurementUnit) : ItemPlaningEvent()
-    data class UpdateNameMedicine(val nameMedicine: TextFieldValue) : ItemPlaningEvent()
-    data class UpdateSelectedIfMedicationIsAsNeeded(val value: Boolean) : ItemPlaningEvent()
-    data class UpdateReminderRestockMedicine(val value: Boolean) : ItemPlaningEvent()
-    data class UpdateCurrentStocks(val value: Int) : ItemPlaningEvent()
-    data class UpdateRemindMeOfStock(val value: Int) : ItemPlaningEvent()
+sealed class ItemPlanningEvent {
+    data class UpdateMeasurementUnit(val measurementUnit: MeasurementUnit) : ItemPlanningEvent()
+    data class UpdateNameMedicine(val nameMedicine: TextFieldValue) : ItemPlanningEvent()
+    data class UpdateSelectedIfMedicationIsAsNeeded(val value: Boolean) : ItemPlanningEvent()
+    data class UpdateReminderRestockMedicine(val value: Boolean) : ItemPlanningEvent()
+    data class UpdateCurrentStocks(val value: Int) : ItemPlanningEvent()
+    data class UpdateRemindMeOfStock(val value: Int) : ItemPlanningEvent()
 
     /// Список часових відміток за день
-    data class AddToListTimesForDay(val value: MedicationDoseInfo) : ItemPlaningEvent()
-    data class DeleteToListTimesForDay(val value: MedicationDoseInfo) : ItemPlaningEvent()
+    data class AddToListTimesForDay(val value: MedicationDoseInfo) : ItemPlanningEvent()
+    data class DeleteToListTimesForDay(val value: MedicationDoseInfo) : ItemPlanningEvent()
 
     /// Список днів за тиждень
-    data class AddToListDayOfWeek(val value: Int) : ItemPlaningEvent()
-    data class DeleteToListDayOfWeek(val value: Int) : ItemPlaningEvent()
-    data class SelectAllToListDayOfWeek(val value: Int) : ItemPlaningEvent()
-    data class UnSelectAllToListDayOfWeek(val value: Int) : ItemPlaningEvent()
+    data class AddToListDayOfWeek(val value: Int) : ItemPlanningEvent()
+    data class DeleteToListDayOfWeek(val value: Int) : ItemPlanningEvent()
+    data class SelectAllToListDayOfWeek(val value: Int) : ItemPlanningEvent()
+    data class UnSelectAllToListDayOfWeek(val value: Int) : ItemPlanningEvent()
 
     /// Період прийому ліків
-    data class UpdateStartDateUse(val value: String) : ItemPlaningEvent()
-    data class UpdateEndDateUse(val value: String) : ItemPlaningEvent()
+    data class UpdateStartDateUse(val value: String) : ItemPlanningEvent()
+    data class UpdateEndDateUse(val value: String) : ItemPlanningEvent()
 
 }

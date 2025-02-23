@@ -29,18 +29,18 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.pasichdev.pharmate.R
 import com.pasichdev.pharmate.domain.model.MedicationDoseInfo
-import com.pasichdev.pharmate.presentation.components.MeasurementInputField
+import com.pasichdev.pharmate.presentation.components.QuantityInputField
 import com.pasichdev.pharmate.utils.formattedTime
 
-enum class SetTimeAndDosePlaningAction {
+enum class SetTimeAndDosePlanningAction {
     CLOSE, SAVE
 }
 
 //TODO Перевірити полля вводу перед віправкою
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SetTimeAndDosePlaning(
-    measurementUnit: String, action: (SetTimeAndDosePlaningAction, MedicationDoseInfo?) -> Unit
+fun SetTimeAndDosePlanning(
+    measurementUnit: String, action: (SetTimeAndDosePlanningAction, MedicationDoseInfo?) -> Unit
 ) {
     val timeState = rememberTimePickerState(
         is24Hour = true
@@ -50,7 +50,7 @@ fun SetTimeAndDosePlaning(
 
 
     Dialog(
-        onDismissRequest = { action(SetTimeAndDosePlaningAction.CLOSE, null) },
+        onDismissRequest = { action(SetTimeAndDosePlanningAction.CLOSE, null) },
         properties = DialogProperties(usePlatformDefaultWidth = true)
     ) {
         ElevatedCard(
@@ -74,7 +74,7 @@ fun SetTimeAndDosePlaning(
                 TimeInput(
                     state = timeState
                 )
-                MeasurementInputField(
+                QuantityInputField(
                     inputName = stringResource(R.string.dosage),
                     value = doseValue,
                     onValueChange = { doseValue = it },
@@ -85,7 +85,7 @@ fun SetTimeAndDosePlaning(
                     modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End
                 ) {
                     Button(modifier = Modifier.padding(end = 8.dp),
-                        onClick = { action(SetTimeAndDosePlaningAction.CLOSE, null) }) {
+                        onClick = { action(SetTimeAndDosePlanningAction.CLOSE, null) }) {
                         Text(
                             text = stringResource(R.string.cancel)
                         )
@@ -93,7 +93,7 @@ fun SetTimeAndDosePlaning(
                     Button(modifier = Modifier.padding(start = 8.dp), onClick = {
                         timeSelected = formattedTime(timeState.hour, timeState.minute)
                         action(
-                            SetTimeAndDosePlaningAction.SAVE, MedicationDoseInfo(
+                            SetTimeAndDosePlanningAction.SAVE, MedicationDoseInfo(
                                 time = timeSelected, dose = doseValue.toIntOrNull() ?: 1
                             )
                         )

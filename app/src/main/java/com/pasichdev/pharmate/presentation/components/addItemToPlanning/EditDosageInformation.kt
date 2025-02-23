@@ -1,4 +1,4 @@
-package com.pasichdev.pharmate.presentation.screens.addItemPlaning
+package com.pasichdev.pharmate.presentation.components.addItemToPlanning
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
@@ -29,15 +29,14 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.pasichdev.pharmate.R
-import com.pasichdev.pharmate.presentation.dialog.SetTimeAndDosePlaning
-import com.pasichdev.pharmate.presentation.dialog.SetTimeAndDosePlaningAction
-import com.pasichdev.pharmate.presentation.viewmodel.AddItemPlaningViewModel
-import com.pasichdev.pharmate.presentation.viewmodel.ItemPlaningEvent.*
+import com.pasichdev.pharmate.presentation.dialog.SetTimeAndDosePlanning
+import com.pasichdev.pharmate.presentation.dialog.SetTimeAndDosePlanningAction
+import com.pasichdev.pharmate.presentation.viewmodel.AddItemPlanningViewModel
+import com.pasichdev.pharmate.presentation.viewmodel.ItemPlanningEvent.*
 
 
 enum class ShowCategorySettingsTime {
@@ -46,43 +45,22 @@ enum class ShowCategorySettingsTime {
 
 
 @Composable
-fun AIPPeriodDosageStageScreen(
+fun EditDosageInformation(
     modifier: Modifier = Modifier,
-    addItemPlaningViewModel: AddItemPlaningViewModel = hiltViewModel()
+    addItemPlanningViewModel: AddItemPlanningViewModel = hiltViewModel()
 
 ) {
-    val state by addItemPlaningViewModel.state.collectAsStateWithLifecycle()
+    val state by addItemPlanningViewModel.state.collectAsStateWithLifecycle()
     var showCategorySettingsTime by remember { mutableStateOf(ShowCategorySettingsTime.IF_NECESSARY) }
-    var showDialogSetTimeAndDosePlaning by remember { mutableStateOf(false) }
+    var showDialogSetTimeAndDosePlanning by remember { mutableStateOf(false) }
 
-    @Composable
-    fun reminderRestockMedicine(): String {
-        return if (state.reminderRestockMedicine) {
-            "${stringResource(R.string.current_stocks)}: ${state.currentStocks} ${state.measurementUnit.abbreviation}\n${
-                stringResource(
-                    R.string.remind_me_of_stock
-                )
-            }: ${state.remindMeOfStock} ${state.measurementUnit.abbreviation}"
-        } else {
-            stringResource(R.string.reminderRestockMedicineOff)
-        }
-    }
 
     Column {
-        Spacer(modifier = modifier.height(20.dp))
-        DemoMedicineCard(
-            medicineName = state.nameMedicine.text,
-            reminderRestockMedicine = reminderRestockMedicine()
-        )
-        Spacer(modifier = modifier.height(20.dp))
-
-        IfMedicationIsAsNeededScreen(modifier = modifier,
-            state.selectedIfMedicationIsAsNeeded,
-            onSelect = {
-                addItemPlaningViewModel.onEvent(
-                    UpdateSelectedIfMedicationIsAsNeeded(it)
-                )
-            })
+        MedicationAsNeeded(modifier = modifier, state.selectedIfMedicationIsAsNeeded, onSelect = {
+            addItemPlanningViewModel.onEvent(
+                UpdateSelectedIfMedicationIsAsNeeded(it)
+            )
+        })
 
         Spacer(modifier = modifier.height(20.dp))
 
@@ -91,7 +69,7 @@ fun AIPPeriodDosageStageScreen(
             enter = slideInHorizontally { -it } + fadeIn(),
             exit = slideOutHorizontally { -it } + fadeOut()) {
             Column {
-                SetTimeIntervalForDayScreen(modifier,
+                DoseTimeSettings(modifier,
                     state.listTimesForDay,
                     state.measurementUnit.abbreviation,
                     showCategorySettingsTime == ShowCategorySettingsTime.DAYS,
@@ -99,11 +77,11 @@ fun AIPPeriodDosageStageScreen(
 
                     when (action) {
                         SetTimeIntervalForDayAction.SHOW_DIALOG -> {
-                            showDialogSetTimeAndDosePlaning = true
+                            showDialogSetTimeAndDosePlanning = true
                         }
 
                         SetTimeIntervalForDayAction.DELETE_ITEM -> {
-                            if (value != null) addItemPlaningViewModel.onEvent(
+                            if (value != null) addItemPlanningViewModel.onEvent(
                                 DeleteToListTimesForDay(
                                     value
                                 )
@@ -113,32 +91,32 @@ fun AIPPeriodDosageStageScreen(
                 }
 
                 Spacer(modifier = modifier.height(20.dp))
-                WeeklyIntakeSelectorScreen(modifier = modifier,
+                DaySelection(modifier = modifier,
                     showCategorySettingsTime == ShowCategorySettingsTime.WEEKLY,
                     activateCard = { showCategorySettingsTime = it },
                     listDaysForWeek = state.listDayOfWeek,
                     otherAction = { action, value ->
                         when (action) {
-                            WeeklyIntakeSelectorAction.ADD_ITEM -> {
-                                addItemPlaningViewModel.onEvent(
+                            DaySelectionAction.ADD_ITEM -> {
+                                addItemPlanningViewModel.onEvent(
                                     AddToListDayOfWeek(value)
                                 )
                             }
 
-                            WeeklyIntakeSelectorAction.DELETE_ITEM -> {
-                                addItemPlaningViewModel.onEvent(
+                            DaySelectionAction.DELETE_ITEM -> {
+                                addItemPlanningViewModel.onEvent(
                                     DeleteToListDayOfWeek(value)
                                 )
                             }
 
-                            WeeklyIntakeSelectorAction.SELECT_ALL -> {
-                                addItemPlaningViewModel.onEvent(
+                            DaySelectionAction.SELECT_ALL -> {
+                                addItemPlanningViewModel.onEvent(
                                     SelectAllToListDayOfWeek(value)
                                 )
                             }
 
-                            WeeklyIntakeSelectorAction.UNSELECT_ALL -> {
-                                addItemPlaningViewModel.onEvent(
+                            DaySelectionAction.UNSELECT_ALL -> {
+                                addItemPlanningViewModel.onEvent(
                                     UnSelectAllToListDayOfWeek(value)
                                 )
                             }
@@ -147,7 +125,7 @@ fun AIPPeriodDosageStageScreen(
 
                 Spacer(modifier = modifier.height(20.dp))
 
-                PeriodOfUseScreen(modifier = modifier,
+                PeriodOfUse(modifier = modifier,
                     startDateUse = state.startDateMedicineUse,
                     endDateUse = state.endDateMedicineUse,
                     showCategorySettingsTime == ShowCategorySettingsTime.PERIOD,
@@ -155,11 +133,11 @@ fun AIPPeriodDosageStageScreen(
                     cardAction = { action, value ->
                         when (action) {
                             PeriodOfUseScreenAction.SAVE_START_DATE -> {
-                                addItemPlaningViewModel.onEvent(UpdateStartDateUse(value))
+                                addItemPlanningViewModel.onEvent(UpdateStartDateUse(value))
                             }
 
                             PeriodOfUseScreenAction.SAVE_END_DATE -> {
-                                addItemPlaningViewModel.onEvent(UpdateEndDateUse(value))
+                                addItemPlanningViewModel.onEvent(UpdateEndDateUse(value))
                             }
                         }
                     })
@@ -170,20 +148,20 @@ fun AIPPeriodDosageStageScreen(
         Spacer(modifier = modifier.height(20.dp))
     }
 
-    if (showDialogSetTimeAndDosePlaning) {
+    if (showDialogSetTimeAndDosePlanning) {
 
-        SetTimeAndDosePlaning(state.measurementUnit.abbreviation) { action, value ->
+        SetTimeAndDosePlanning(state.measurementUnit.abbreviation) { action, value ->
             when (action) {
-                SetTimeAndDosePlaningAction.CLOSE -> {
-                    showDialogSetTimeAndDosePlaning = false
+                SetTimeAndDosePlanningAction.CLOSE -> {
+                    showDialogSetTimeAndDosePlanning = false
                 }
 
-                SetTimeAndDosePlaningAction.SAVE -> {
+                SetTimeAndDosePlanningAction.SAVE -> {
                     //TODO Опрацювати нуль в вигляді помилки
                     if (value != null) {
-                        addItemPlaningViewModel.onEvent(AddToListTimesForDay(value))
+                        addItemPlanningViewModel.onEvent(AddToListTimesForDay(value))
                     }
-                    showDialogSetTimeAndDosePlaning = false
+                    showDialogSetTimeAndDosePlanning = false
                 }
             }
 

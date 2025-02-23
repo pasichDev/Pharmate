@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 
 
 @Composable
-fun MeasurementInputField(
+fun QuantityInputField (
     inputName: String = "", value: String, onValueChange: (String) -> Unit, unit: String
 ) {
     OutlinedTextField(

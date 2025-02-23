@@ -25,7 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.pasichdev.pharmate.R
-import com.pasichdev.pharmate.presentation.components.MeasurementInputField
+import com.pasichdev.pharmate.presentation.components.QuantityInputField
 
 enum class RemainingQuantityDialogAction {
     CANCEL, SAVE
@@ -68,7 +68,7 @@ fun RemainingQuantityDialog(
                         .fillMaxWidth()
                         .padding(16.dp), text = titleDialog
                 )
-                MeasurementInputField(
+                QuantityInputField(
                     value = value, onValueChange = { value = it }, unit = measurementUnit
                 )
 
@@ -79,9 +79,7 @@ fun RemainingQuantityDialog(
                 ) {
                     Button(modifier = Modifier.padding(end = 8.dp), onClick = {
                         action(
-                            RemainingQuantityDialogAction.CANCEL,
-                            remainingQuantityDialogState,
-                            0
+                            RemainingQuantityDialogAction.CANCEL, remainingQuantityDialogState, 0
                         )
                     }) {
                         Text(

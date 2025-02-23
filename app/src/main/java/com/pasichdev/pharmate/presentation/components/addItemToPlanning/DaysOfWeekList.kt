@@ -1,7 +1,6 @@
-package com.pasichdev.pharmate.presentation.screens.addItemPlaning
+package com.pasichdev.pharmate.presentation.components.addItemToPlanning
 
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,7 +13,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.AssistChipDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -24,74 +22,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.pasichdev.pharmate.R
-import com.pasichdev.pharmate.defaultAllDaysCode
-import com.pasichdev.pharmate.domain.model.DayOfWeek
-import com.pasichdev.pharmate.presentation.components.PreviewChip
-import java.text.DateFormatSymbols
-
-enum class WeeklyIntakeSelectorAction {
-    ADD_ITEM, DELETE_ITEM, SELECT_ALL, UNSELECT_ALL
-}
-
-fun getDaysOfWeek(): List<DayOfWeek> {
-    return DateFormatSymbols.getInstance().weekdays.filter { it.isNotEmpty() }
-        .mapIndexed { index, name ->
-            DayOfWeek(index, name.replaceFirstChar { it.uppercaseChar() })
-        }
-
-}
-
-
-@Composable
-fun WeeklyIntakeSelectorScreen(
-    modifier: Modifier = Modifier,
-    visibilityFull: Boolean = false,
-    listDaysForWeek: List<Int>,
-    activateCard: (ShowCategorySettingsTime) -> Unit,
-    otherAction: (WeeklyIntakeSelectorAction, Int) -> Unit,
-) {
-
-    var allDaysActive = listDaysForWeek.contains(defaultAllDaysCode)
-
-
-    Card(modifier = modifier, onClick = { activateCard(ShowCategorySettingsTime.WEEKLY) }) {
-
-        Column(modifier = Modifier.padding(20.dp)) {
-            Text(
-                stringResource(R.string.weeklyIntakeSelectorTitle),
-                style = MaterialTheme.typography.titleMedium
-            )
-            if (!visibilityFull) {
-                PreviewChip(
-                    textTrue = stringResource(R.string.noSett),
-                    textFalse = if (allDaysActive) stringResource(R.string.daily) else stringResource(
-                        R.string.setupCountDaysOfWeek, listDaysForWeek.count()
-                    ),
-                    isPreview = listDaysForWeek.isEmpty()
-                ) {
-                    activateCard(ShowCategorySettingsTime.WEEKLY)
-                }
-            }
-            if (visibilityFull) {
-                WeeklyIntakeSelectorChipGroup(selectItems = listDaysForWeek,
-                    allDaysActive = allDaysActive,
-                    onClick = { item, selected ->
-                        if (selected) otherAction(WeeklyIntakeSelectorAction.DELETE_ITEM, item)
-                        else otherAction(WeeklyIntakeSelectorAction.ADD_ITEM, item)
-                    },
-                    onClickAll = {
-                        if (allDaysActive) otherAction(WeeklyIntakeSelectorAction.UNSELECT_ALL, 0)
-                        else otherAction(WeeklyIntakeSelectorAction.SELECT_ALL, 0)
-                    })
-            }
-        }
-    }
-}
 
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
-fun WeeklyIntakeSelectorChipGroup(
+fun DaysOfWeekList(
     selectItems: List<Int>,
     allDaysActive: Boolean,
     onClick: (Int, Boolean) -> Unit,

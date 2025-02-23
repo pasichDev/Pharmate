@@ -25,15 +25,15 @@
     <string name="tracking">Трекінг</string>
     <string name="menu">Меню</string>
 
-    <!-- Planing -->
+    <!-- Planning -->
     <string name="emptyTitle">Готові почати?</string>
     <string name="emptyDescr">Додайте перше нагадування про ліки</string>
     <string name="fab_add">Додати запис</string>
     <string name="name_medicine">Назва препарату</string>
     <string name="add_medicine">Додати препарат</string>
     <string name="medicine_take_as_needed_question"> "Чи потрібно приймати ці ліки лише за потреби? (Якщо так, нагадування не потрібне.)"</string>
-    <string name="planing_subtitle_first">Основна інформація: назва, одиниця виміру, запас</string>
-    <string name="planing_subtitle_second">Частота та період прийому</string>
+    <string name="Planning_subtitle_first">Основна інформація: назва, одиниця виміру, запас</string>
+    <string name="Planning_subtitle_second">Частота та період прийому</string>
     <string name="reminder_restock_question">Отримувати нагадування про необхідність поповнення запасів?</string>
     <string name="current_stocks">Поточні запаси</string>
     <string name="remind_me_of_stock">Нагадати при залишку</string>
@@ -45,6 +45,7 @@
     <string name="periodUsePill">Період прийому препарату</string>
     <string name="startUse">Початок:</string>
     <string name="endUse">Кінець:</string>
+    <string name="finish_Planning">Завершіть планування</string>
 
     <!-- Menu -->
     <string name="donate_desc">Проявіть свою любов — підтримайте нас донатом!</string>
