@@ -11,6 +11,7 @@ import androidx.compose.material3.DatePicker
 import androidx.compose.material3.DatePickerDialog
 import androidx.compose.material3.DatePickerState
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.SelectableDates
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDatePickerState
 import androidx.compose.runtime.Composable
@@ -38,9 +39,6 @@ enum class PeriodOfUseScreenAction {
     SAVE_START_DATE, SAVE_END_DATE
 }
 
-/**
- * TODO Реалізувати заборону для кінцевої дати щоб вона не була раніше початкової
- */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PeriodOfUseScreen(
@@ -55,8 +53,19 @@ fun PeriodOfUseScreen(
 
     val startDateState =
         rememberDatePickerState(initialSelectedDateMillis = convertStringToDateMillis(startDateUse))
-    val endDateState =
-        rememberDatePickerState(initialSelectedDateMillis = convertStringToDateMillis(endDateUse))
+
+    val startDateSelected = startDateState.selectedDateMillis?.let {
+        Instant.ofEpochMilli(it).atZone(ZoneId.systemDefault()).toLocalDate()
+    }?.plusDays(1)
+    val endDateState = rememberDatePickerState(
+        initialSelectedDateMillis = convertStringToDateMillis(endDateUse),
+        selectableDates = object : SelectableDates {
+            override fun isSelectableDate(utcTimeMillis: Long): Boolean {
+                val selectedDate =
+                    Instant.ofEpochMilli(utcTimeMillis).atZone(ZoneId.systemDefault()).toLocalDate()
+                return startDateSelected?.let { !selectedDate.isBefore(it) } != false
+            }
+        })
     val selectedDateState =
         if (showDialog == ShowDialogsDatePicker.START_DATE) startDateState else if (showDialog == ShowDialogsDatePicker.END_DATE) endDateState else rememberDatePickerState()
 
@@ -72,7 +81,7 @@ fun PeriodOfUseScreen(
                     textFalse = "$startDateUse / $endDateUse",
                     isPreview = startDateUse.isEmpty() || endDateUse.isEmpty()
                 ) {
-                    activateCard(ShowCategorySettingsTime.WEEKLY)
+                    activateCard(ShowCategorySettingsTime.PERIOD)
                 }
 
             }
@@ -108,7 +117,6 @@ fun PeriodOfUseScreen(
                 if (selectedDate != null) {
                     var date = selectedDate.format(defaultDateFormat)
 
-                    println(date)
                     when (showDialog) {
                         ShowDialogsDatePicker.START_DATE -> {
                             cardAction(
