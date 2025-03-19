@@ -32,6 +32,7 @@
     <string name="name_medicine">Назва препарату</string>
     <string name="add_medicine">Додати препарат</string>
     <string name="medicine_take_as_needed_question"> "Чи потрібно приймати ці ліки лише за потреби? (Якщо так, нагадування не потрібне.)"</string>
+    <string name="shouldRemind">Нагадати про прийом</string>
     <string name="Planning_subtitle_first">Основна інформація: назва, одиниця виміру, запас</string>
     <string name="Planning_subtitle_second">Частота та період прийому</string>
     <string name="reminder_restock_question">Отримувати нагадування про необхідність поповнення запасів?</string>

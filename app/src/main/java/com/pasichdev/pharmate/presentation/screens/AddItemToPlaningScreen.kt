@@ -66,7 +66,7 @@ fun AddItemToPlanningScreen(
         return when (stageCreation) {
             StageCreation.BASIC_INFORMATION -> state.nameMedicine.text.length in 3..25
             StageCreation.PERIOD -> isFinishEditDoseInformation(state)
-            StageCreation.FINAL_STEPS -> false
+
         }
     }
 
@@ -74,7 +74,6 @@ fun AddItemToPlanningScreen(
         when (stageCreation) {
             StageCreation.BASIC_INFORMATION -> navController.popBackStack()
             StageCreation.PERIOD -> stageCreation = StageCreation.BASIC_INFORMATION
-            StageCreation.FINAL_STEPS -> stageCreation = StageCreation.PERIOD
         }
     }
 
@@ -88,10 +87,10 @@ fun AddItemToPlanningScreen(
             }
 
             StageCreation.PERIOD -> {
-                stageCreation = StageCreation.FINAL_STEPS
+
             }
 
-            StageCreation.FINAL_STEPS -> {}
+
         }
     }
 
@@ -132,10 +131,6 @@ fun AddItemToPlanningScreen(
                         modifier = modifier
 
                     )
-                }
-
-                StageCreation.FINAL_STEPS -> {
-                    Box(modifier.size(100.dp))
                 }
             }
 

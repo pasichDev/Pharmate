@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.automirrored.filled.ArrowForward
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -34,7 +35,6 @@ fun CustomTopBar(
         return when (stageCreation) {
             StageCreation.BASIC_INFORMATION -> R.string.Planning_subtitle_first
             StageCreation.PERIOD -> R.string.Planning_subtitle_second
-            StageCreation.FINAL_STEPS -> R.string.finish_Planning
         }
     }
 
@@ -63,15 +63,13 @@ fun CustomTopBar(
                 )
             }
 
-            if (stageCreation == StageCreation.BASIC_INFORMATION || stageCreation == StageCreation.PERIOD) {
-                IconButton(onClick = { action(CustomTopBarAction.NEXT) }, enabled = isActiveNext) {
+               IconButton(onClick = { action(CustomTopBarAction.NEXT) }, enabled = isActiveNext) {
                     Icon(
-                        Icons.AutoMirrored.Filled.ArrowForward,
+                       if(stageCreation == StageCreation.PERIOD ) Icons.Default.Check else  Icons.AutoMirrored.Filled.ArrowForward,
                         contentDescription = stringResource(R.string.next_step)
                     )
 
                 }
-            }
 
             Spacer(modifier = Modifier.width(10.dp))
 

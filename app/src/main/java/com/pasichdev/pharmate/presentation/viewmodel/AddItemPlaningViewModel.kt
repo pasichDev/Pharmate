@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import com.pasichdev.pharmate.defaultAllDaysCode
 import com.pasichdev.pharmate.domain.MeasurementUnit
 import com.pasichdev.pharmate.domain.model.MedicationDoseInfo
-import com.pasichdev.pharmate.presentation.components.addItemToPlanning.StageCreation
 import com.pasichdev.pharmate.presentation.mvi.AddItemPlanningState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,7 +32,12 @@ class AddItemPlanningViewModel @Inject constructor() : ViewModel() {
             }
 
             is ItemPlanningEvent.UpdateSelectedIfMedicationIsAsNeeded -> {
-                _state.update { it.copy(selectedIfMedicationIsAsNeeded = event.value) }
+                _state.update {
+                    it.copy(
+                        selectedIfMedicationIsAsNeeded = event.value,
+                        shouldRemind = if(event.value) false else _state.value.shouldRemind
+                    )
+                }
             }
 
             is ItemPlanningEvent.UpdateReminderRestockMedicine -> {
@@ -79,9 +83,9 @@ class AddItemPlanningViewModel @Inject constructor() : ViewModel() {
             }
 
             is ItemPlanningEvent.DeleteToListDayOfWeek -> {
-                    _state.update {
-                        it.copy(listDayOfWeek = it.listDayOfWeek.toMutableList()
-                            .apply { remove(event.value) })
+                _state.update {
+                    it.copy(listDayOfWeek = it.listDayOfWeek.toMutableList()
+                        .apply { remove(event.value) })
 
                 }
             }
@@ -99,8 +103,17 @@ class AddItemPlanningViewModel @Inject constructor() : ViewModel() {
                 }
             }
 
-            is ItemPlanningEvent.UpdateEndDateUse -> {  _state.update { it.copy(endDateMedicineUse = event.value) }}
-            is ItemPlanningEvent.UpdateStartDateUse -> {  _state.update { it.copy(startDateMedicineUse = event.value) }}
+            is ItemPlanningEvent.UpdateEndDateUse -> {
+                _state.update { it.copy(endDateMedicineUse = event.value) }
+            }
+
+            is ItemPlanningEvent.UpdateStartDateUse -> {
+                _state.update { it.copy(startDateMedicineUse = event.value) }
+            }
+
+            is ItemPlanningEvent.UpdateRemindShould -> {
+                _state.update { it.copy(shouldRemind = event.value) }
+            }
         }
     }
 
@@ -114,6 +127,7 @@ sealed class ItemPlanningEvent {
     data class UpdateReminderRestockMedicine(val value: Boolean) : ItemPlanningEvent()
     data class UpdateCurrentStocks(val value: Int) : ItemPlanningEvent()
     data class UpdateRemindMeOfStock(val value: Int) : ItemPlanningEvent()
+    data class UpdateRemindShould(val value: Boolean) : ItemPlanningEvent()
 
     /// Список часових відміток за день
     data class AddToListTimesForDay(val value: MedicationDoseInfo) : ItemPlanningEvent()

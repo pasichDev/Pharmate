@@ -27,4 +27,5 @@ data class AddItemPlanningState(
     val listDayOfWeek: MutableList<Int> = mutableListOf<Int>().apply { add(defaultAllDaysCode) },
     val startDateMedicineUse: String = "",
     val endDateMedicineUse: String = "",
+    val shouldRemind: Boolean = false,
 )
